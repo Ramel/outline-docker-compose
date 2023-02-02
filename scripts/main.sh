@@ -32,6 +32,7 @@ function create_global_env_file {
     # Docker image version
     env_replace OUTLINE_VERSION $OUTLINE_VERSION $env_file
     env_replace POSTGRES_VERSION $POSTGRES_VERSION $env_file
+    env_replace MINIO_VERSION $MINIO_VERSION $env_file
 }
 
 function create_minio_env_file {

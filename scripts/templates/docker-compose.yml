@@ -17,7 +17,7 @@ services:
     networks:
       - ${NETWORKS}
   wk-minio:
-    image: minio/minio:RELEASE.2022-11-17T23-20-09Z
+    image: minio/minio:${MINIO_VERSION}
     volumes:
       - ./data/minio_root:/minio_root:z
       - ./data/certs:/root/.minio/certs:z
@@ -28,7 +28,7 @@ services:
     networks:
       - ${NETWORKS}
   wk-createbuckets:
-    image: minio/mc:RELEASE.2022-11-17T21-20-39Z
+    image: minio/mc:${MC_VERSION}
     depends_on:
       - wk-minio
     env_file:
@@ -44,7 +44,7 @@ services:
       - ${NETWORKS}
   wk-outline:
     image: outlinewiki/outline:${OUTLINE_VERSION}
-    command: sh -c "yarn sequelize:migrate --env production-ssl-disabled && yarn start"
+    command: sh -c "yarn db:migrate --env production-ssl-disabled && yarn start"
     environment:
       - DATABASE_URL=postgres://user:pass@wk-postgres:5432/outline
       - DATABASE_URL_TEST=postgres://user:pass@wk-postgres:5432/outline-test
